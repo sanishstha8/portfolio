@@ -14,7 +14,7 @@ export function About() {
             title="I like turning ideas into working systems."
           />
 
-          <Reveal className="body-lg mt-8 max-w-2xl space-y-5 text-body">
+          <Reveal className="body-lg mt-8 max-w-2xl space-y-5 text-justify text-body hyphens-auto lg:text-left lg:hyphens-manual">
             <p>
               I am a BSc CSIT student based in Nepal, working mostly on the
               backend: Python and Django, REST APIs, and the databases

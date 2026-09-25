@@ -6,6 +6,7 @@ import { site } from "@/lib/site";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
+import { StartAtTop } from "@/components/layout/StartAtTop";
 import { GridBackdrop } from "@/components/ui/GridBackdrop";
 import { Cursor } from "@/components/ui/Cursor";
 import { FaqWidget } from "@/components/faq/FaqWidget";
@@ -116,6 +117,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
         />
         <MotionProvider>
+          <StartAtTop />
           <GridBackdrop />
           <Cursor />
           <Navigation />
