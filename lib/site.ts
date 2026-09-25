@@ -22,8 +22,8 @@ export type ContactChannel = {
  * hero renders a labelled empty frame instead of a broken image.
  */
 export const heroPhoto: { src: string; alt: string } | null = {
-  src: "/sanish3.jpeg",
-  alt: "Sanish Shrestha",
+  src: "/sanish-portrait.jpg",
+  alt: "Sanish Shrestha in a black suit and tie",
 };
 
 /**

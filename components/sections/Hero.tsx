@@ -82,7 +82,7 @@ export function Hero() {
             className="relative mx-auto w-full max-w-sm lg:col-span-6 lg:ml-auto lg:mr-0 lg:max-w-[min(34rem,max(20rem,calc((100svh_-_11rem)_*_0.8)))] xl:max-w-[min(32rem,max(20rem,calc((100svh_-_11rem)_*_0.8)))] 2xl:max-w-[min(34rem,max(20rem,calc((100svh_-_11rem)_*_0.8)))]"
           >
             <PhotoFrame />
-            <StackCard className="mx-auto mt-5 w-full max-w-xs lg:absolute lg:-bottom-6 lg:-left-4 lg:mt-0 lg:w-60 xl:-left-12 2xl:-left-16" />
+            <StackCard className="mx-auto mt-5 w-full max-w-xs lg:absolute lg:-bottom-6 lg:-left-4 lg:mt-0 lg:w-[17rem] xl:-left-12 2xl:-left-16" />
           </motion.div>
         </div>
       </div>
