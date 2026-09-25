@@ -1,0 +1,368 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design tokens — light theme
+
+   Token names are semantic, so a future re-theme means editing values
+   here and nothing else:
+     canvas  page background      panel   raised card
+     shade   inset chrome         ink     primary text
+     muted   secondary text       faint   tertiary / metadata
+     accent  the one accent colour
+   ------------------------------------------------------------------ */
+@theme {
+  /* Surfaces */
+  --color-canvas: #ffffff;
+  --color-panel: #fafafb;
+  --color-shade: #f1f3f5;
+
+  /* Type. `faint` carries 10px mono metadata, so it clears WCAG AA against
+     both surfaces it ever sits on:
+       on canvas  — ink 18.9:1, muted 8.5:1, faint 5.2:1
+       on shade   — ink 16.1:1, muted 7.5:1, faint 4.7:1 */
+  --color-ink: #0f1115;
+  --color-muted: #4a4e57;
+  --color-faint: #676d77;
+  /* Body copy in the reading sections: darker than muted, easier on the eye. */
+  --color-body: #33363d;
+
+  /* Accent — deep teal. 5.2:1 as text on canvas, and 5.2:1 with white
+     text on top of it, so it works as both ink and fill. */
+  --color-accent: #0b7a6d;
+  --color-accent-hover: #095f55;
+
+  /* Hairlines */
+  --color-line: rgba(15, 17, 21, 0.12);
+  --color-line-soft: rgba(15, 17, 21, 0.07);
+  --color-line-strong: rgba(15, 17, 21, 0.26);
+  /* Only for the fixed background grid, which tiles the entire page. */
+  --color-line-faint: rgba(15, 17, 21, 0.045);
+
+  /* Fonts — bound to next/font CSS variables in app/layout.tsx */
+  --font-display: var(--font-poppins), Poppins, ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* offset for the sticky header when jumping to #anchors */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    font-variant-ligatures: contextual common-ligatures;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-canvas);
+  }
+
+  /* Visible, on-brand focus states everywhere */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Only hide the outline where we paint our own */
+  [data-focus-custom]:focus-visible {
+    outline: none;
+  }
+
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Scrollbar — quiet, matches the shell */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(15, 17, 21, 0.2) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(15, 17, 21, 0.18);
+    border: 3px solid var(--color-canvas);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(15, 17, 21, 0.3);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Layout primitives
+   ------------------------------------------------------------------ */
+@utility shell {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 96rem;
+  padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 3rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 4.5rem;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Type scale — Poppins is noticeably wider per character than a
+   grotesk, so the display sizes are capped lower than they look.
+   ------------------------------------------------------------------ */
+@utility display-hero {
+  font-family: var(--font-display);
+  font-weight: 700;
+  /* Sentence-case greeting + name, sized to sit beside the portrait rather
+     than run the full page width. Line height leaves room for descenders. */
+  font-size: clamp(2rem, 3.6vw, 3.375rem);
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+}
+
+/** Role line under the rule — a step down from the name. */
+@utility display-role {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.9vw, 2.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+@utility display-lg {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.85rem, 5vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.032em;
+}
+
+@utility display-md {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.1vw, 2.5rem);
+  line-height: 1.12;
+  letter-spacing: -0.026em;
+}
+
+@utility display-sm {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+}
+
+/* Monospace metadata — the connective tissue of the whole interface.
+   Tracking eases off as the size goes up, so the wider glyphs do not also
+   gain proportional letter-spacing and blow out their containers. */
+@utility mono-nav {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  font-weight: 500;
+
+  /* Full 16px once the bar has room for it. Below 1024px the five links,
+     the logo and the availability chip would crowd each other, so the size
+     steps down rather than wrapping or overflowing. */
+  @media (width >= 64rem) {
+    font-size: 1rem;
+    letter-spacing: 0.11em;
+  }
+}
+
+@utility mono-meta {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility mono-micro {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ------------------------------------------------------------------
+   Reading sections (everything below the hero). Sentence case, normal
+   sizes, no tracking games.
+   ------------------------------------------------------------------ */
+@utility section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+@utility section-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--color-accent);
+}
+
+@utility body-lg {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+
+  @media (width >= 64rem) {
+    font-size: 1.125rem;
+  }
+}
+
+/* ------------------------------------------------------------------
+   The background grid — technical, and almost invisible
+   ------------------------------------------------------------------ */
+@utility grid-field {
+  background-image:
+    linear-gradient(to right, rgba(15, 17, 21, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 17, 21, 0.022) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+@utility hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(15, 17, 21, 0.07) 0 1px,
+    transparent 1px 7px
+  );
+}
+
+/* A very soft wash behind the hero, so the top of the page is not a
+   flat sheet of white. */
+@utility hero-wash {
+  background-image: linear-gradient(
+    180deg,
+    var(--color-shade) 0%,
+    rgba(241, 243, 245, 0.45) 45%,
+    var(--color-canvas) 100%
+  );
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion — hard stop
+   ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* The typing caret is always in the DOM for hydration parity, so it is
+     hidden here rather than branched away in the component. */
+  .type-caret {
+    display: none !important;
+  }
+}
+
+/* Hide the custom cursor for anything without a fine pointer */
+@media (hover: none), (pointer: coarse) {
+  .cursor-layer {
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Keyframes
+   ------------------------------------------------------------------ */
+@theme {
+  --animate-status-ring: status-ring 2.6s var(--ease-out-quint) infinite;
+  --animate-scroll-hint: scroll-hint 2.2s var(--ease-out-quint) infinite;
+  --animate-trace: trace 4.2s linear infinite;
+  --animate-caret: caret 1.05s steps(1) infinite;
+
+  @keyframes status-ring {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    70%,
+    100% {
+      transform: scale(3);
+      opacity: 0;
+    }
+  }
+
+  @keyframes scroll-hint {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    35% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes trace {
+    0% {
+      transform: translateX(-110%);
+    }
+    100% {
+      transform: translateX(420%);
+    }
+  }
+
+  @keyframes caret {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    50.01%,
+    100% {
+      opacity: 0;
+    }
+  }
+}
