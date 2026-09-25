@@ -33,6 +33,35 @@ export const heroPhoto: { src: string; alt: string } | null = {
  */
 export const resumeUrl: string | null = null;
 
+/**
+ * The site's public origin, with no trailing slash. In order:
+ *   1. NEXT_PUBLIC_SITE_URL, when it holds a real value (a missing
+ *      "https://" is added). An empty variable is ignored rather than
+ *      crashing the build with `new URL("")`.
+ *   2. On Vercel, the project's production domain, which Vercel sets
+ *      automatically at build time.
+ *   3. localhost, for local builds.
+ */
+function resolveSiteUrl(): string {
+  const candidates = [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    process.env.VERCEL_PROJECT_PRODUCTION_URL,
+  ];
+
+  for (const raw of candidates) {
+    const value = raw?.trim();
+    if (!value) continue;
+    const withProtocol = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+    try {
+      return new URL(withProtocol).origin;
+    } catch {
+      // Malformed value: fall through to the next source.
+    }
+  }
+
+  return "http://localhost:3000";
+}
+
 export const site = {
   name: "Sanish Shrestha",
   shortName: "SANISH.DEV",
@@ -42,11 +71,10 @@ export const site = {
   location: "Nepal",
   availability: "AVAILABLE",
   /**
-   * Canonical origin. Placeholder domain — override with NEXT_PUBLIC_SITE_URL
-   * at build time, or edit this line once the real domain is live. Used for
-   * canonical URLs, Open Graph image resolution and the sitemap.
+   * Canonical origin, used for canonical URLs, Open Graph image resolution
+   * and the sitemap. See `resolveSiteUrl` for where it comes from.
    */
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sanishshrestha.dev",
+  url: resolveSiteUrl(),
   description:
     "Sanish Shrestha is a Python and Django developer building practical web applications, backend systems and REST APIs.",
   githubUrl: "https://github.com/sanishstha8",
