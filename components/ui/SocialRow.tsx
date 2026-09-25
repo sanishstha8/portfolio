@@ -8,7 +8,7 @@ import { BrandIcon } from "./BrandIcon";
  */
 export function SocialRow({ className = "" }: { className?: string }) {
   return (
-    <ul className={`flex items-center gap-4 ${className}`}>
+    <ul className={`flex items-center gap-3 lg:gap-4 ${className}`}>
       {contactChannels.map((channel) => {
         const label = channel.label.charAt(0) + channel.label.slice(1).toLowerCase();
         const newTab = channel.href ? !isProtocolLink(channel.href) : false;
@@ -19,7 +19,7 @@ export function SocialRow({ className = "" }: { className?: string }) {
               <a
                 href={channel.href}
                 {...(newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="flex h-14 w-14 items-center justify-center rounded-full bg-ink text-canvas transition-colors duration-300 hover:bg-accent"
+                className="flex h-11 w-11 items-center lg:h-14 lg:w-14 justify-center rounded-full bg-ink text-canvas transition-colors duration-300 hover:bg-accent"
               >
                 <span className="sr-only">{label}</span>
                 <BrandIcon name={channel.icon} className="h-5 w-5" />
@@ -27,7 +27,7 @@ export function SocialRow({ className = "" }: { className?: string }) {
             ) : (
               <span
                 title={`${label}, add the link in lib/site.ts`}
-                className="flex h-14 w-14 items-center justify-center rounded-full border border-dashed border-line-strong text-faint"
+                className="flex h-11 w-11 items-center lg:h-14 lg:w-14 justify-center rounded-full border border-dashed border-line-strong text-faint"
               >
                 <span className="sr-only">{label}, link pending</span>
                 <BrandIcon name={channel.icon} className="h-5 w-5" />

@@ -21,6 +21,8 @@ type ProjectGalleryProps = {
 
 const SWIPE_DISTANCE = 60; // px
 const SWIPE_VELOCITY = 400; // px/s
+/** A press that moves further than this is a swipe, not a tap. */
+const TAP_TOLERANCE = 10; // px
 
 const slideVariants = {
   enter: (direction: number) => ({ x: direction > 0 ? 40 : -40, opacity: 0 }),
@@ -39,6 +41,8 @@ export function ProjectGallery({ images, title, className = "", priority = true 
   const [direction, setDirection] = useState(0);
   const [viewerOpen, setViewerOpen] = useState(false);
   const expandRef = useRef<HTMLButtonElement>(null);
+  /** Where the current press started, to tell a tap from a swipe. */
+  const press = useRef<{ x: number; y: number } | null>(null);
   const total = images.length;
   const multiple = total > 1;
 
@@ -50,6 +54,18 @@ export function ProjectGallery({ images, title, className = "", priority = true 
 
   const next = () => goTo(index + 1, 1);
   const prev = () => goTo(index - 1, -1);
+
+  function handlePointerDown(event: React.PointerEvent) {
+    press.current = { x: event.clientX, y: event.clientY };
+  }
+
+  function handlePointerUp(event: React.PointerEvent) {
+    const start = press.current;
+    press.current = null;
+    if (!start) return;
+    const moved = Math.hypot(event.clientX - start.x, event.clientY - start.y);
+    if (moved < TAP_TOLERANCE) setViewerOpen(true);
+  }
 
   function handleDragEnd(_: unknown, info: PanInfo) {
     if (info.offset.x < -SWIPE_DISTANCE || info.velocity.x < -SWIPE_VELOCITY) next();
@@ -120,8 +136,14 @@ export function ProjectGallery({ images, title, className = "", priority = true 
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.7}
               onDragEnd={handleDragEnd}
-              /* framer-motion does not fire onTap after a drag, so a swipe never opens the viewer. */
-              onTap={() => setViewerOpen(true)}
+              /* Only a press that barely moves (a tap) opens the viewer; a
+                 swipe just changes the screenshot. framer-motion's onTap also
+                 fired after touch swipes, so tap detection is done here. */
+              onPointerDown={handlePointerDown}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={() => {
+                press.current = null;
+              }}
               className={`absolute inset-0 ${multiple ? "cursor-grab active:cursor-grabbing" : "cursor-zoom-in"}`}
             >
               <Image

@@ -23,7 +23,7 @@ export function PhotoFrame({ className = "" }: { className?: string }) {
 
       <div
         className={`relative w-full overflow-hidden border border-line bg-shade ${
-          heroPhoto ? "aspect-[4/5]" : "aspect-[3/2] sm:aspect-[4/5]"
+          heroPhoto ? "aspect-square" : "aspect-[3/2] sm:aspect-[4/5]"
         }`}
       >
         {heroPhoto ? (
@@ -32,9 +32,8 @@ export function PhotoFrame({ className = "" }: { className?: string }) {
             alt={heroPhoto.alt}
             fill
             priority
-            sizes="(min-width: 1536px) 34rem, (min-width: 1280px) 32rem, (min-width: 1024px) 44vw, 24rem"
-            /* The source is 3:4 in a 4:5 frame, so cover trims only a
-               sliver vertically — centre keeps the whole composition. */
+            sizes="(min-width: 1536px) 44rem, (min-width: 1024px) 46vw, 24rem"
+            /* Square source in a square frame, shown whole everywhere. */
             className="object-cover object-center"
           />
         ) : (
