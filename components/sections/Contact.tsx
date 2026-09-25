@@ -9,6 +9,8 @@ const CHANNEL_NAMES: Record<string, string> = {
   GITHUB: "GitHub",
   LINKEDIN: "LinkedIn",
   EMAIL: "Email",
+  WHATSAPP: "WhatsApp",
+  PHONE: "Phone",
 };
 
 export function Contact() {

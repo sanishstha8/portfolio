@@ -9,8 +9,11 @@ import { BrandIcon } from "./BrandIcon";
 export function SocialRow({ className = "" }: { className?: string }) {
   return (
     <ul className={`flex items-center gap-3 lg:gap-4 ${className}`}>
-      {contactChannels.map((channel) => {
-        const label = channel.label.charAt(0) + channel.label.slice(1).toLowerCase();
+      {contactChannels.filter((channel) => channel.inHero !== false).map((channel) => {
+        const label =
+          channel.label === "WHATSAPP"
+            ? "WhatsApp"
+            : channel.label.charAt(0) + channel.label.slice(1).toLowerCase();
         const newTab = channel.href ? !isProtocolLink(channel.href) : false;
 
         return (

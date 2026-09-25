@@ -5,7 +5,7 @@
  */
 
 /** Which brand mark the social row draws for a channel. */
-export type ChannelIcon = "github" | "linkedin" | "mail";
+export type ChannelIcon = "github" | "linkedin" | "mail" | "phone" | "whatsapp";
 
 export type ContactChannel = {
   label: string;
@@ -14,6 +14,8 @@ export type ContactChannel = {
   href: string | null;
   isPlaceholder: boolean;
   icon: ChannelIcon;
+  /** Show in the hero's round icon row. Defaults to true. */
+  inHero?: boolean;
 };
 
 /**
@@ -80,6 +82,7 @@ export const site = {
   githubUrl: "https://github.com/sanishstha8",
   githubHandle: "sanishstha8",
   linkedinUrl: "https://www.linkedin.com/in/sanish-shrestha-3843442a8",
+  phone: "+977 9849957521",
   email: "xthasanish44@gmail.com",
 } as const;
 
@@ -112,6 +115,23 @@ export const contactChannels: ContactChannel[] = [
     href: `mailto:${site.email}`,
     isPlaceholder: false,
     icon: "mail",
+  },
+  {
+    label: "WHATSAPP",
+    value: "Message on WhatsApp",
+    // wa.me takes the number as digits only, country code first.
+    href: `https://wa.me/${site.phone.replace(/\D/g, "")}`,
+    isPlaceholder: false,
+    icon: "whatsapp",
+  },
+  {
+    label: "PHONE",
+    value: site.phone,
+    // tel: links drop the spaces so every dialler reads the number cleanly.
+    href: `tel:${site.phone.replace(/\s+/g, "")}`,
+    isPlaceholder: false,
+    icon: "phone",
+    inHero: false,
   },
 ];
 

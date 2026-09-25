@@ -58,8 +58,8 @@ export const faqEntries: FaqEntry[] = [
   {
     id: "contact",
     question: "How can I contact you?",
-    answer: `The fastest way is email: ${site.email}. You'll also find my GitHub and LinkedIn in the contact section below, or just use the "Send a message" button.`,
-    keywords: ["contact", "email", "reach", "message", "touch", "linkedin", "github"],
+    answer: `The fastest way is email: ${site.email}, or call or WhatsApp me on ${site.phone}. You'll also find my GitHub and LinkedIn in the contact section below, or just use the "Send a message" button.`,
+    keywords: ["contact", "email", "reach", "message", "touch", "linkedin", "github", "phone", "call", "number", "whatsapp"],
   },
   {
     id: "background",
