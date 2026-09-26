@@ -81,7 +81,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.3, ease: EASE_OUT_EXPO }}
-            className="relative w-full sm:max-w-[min(24rem,max(12rem,calc(100svh_-_28rem)))] lg:col-span-6 lg:ml-auto lg:mr-0 lg:max-w-[min(44rem,max(20rem,calc(100svh_-_11rem)))]"
+            className="relative w-full sm:max-w-[min(24rem,max(12rem,calc(100svh_-_28rem)))] lg:col-span-6 lg:ml-auto lg:mr-0 lg:max-w-[min(44rem,max(20rem,calc(100svh_-_9.5rem)))]"
           >
             <PhotoFrame />
           </motion.div>
