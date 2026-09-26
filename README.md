@@ -63,10 +63,10 @@ components/
   faq/                    FaqWidget — floating "Ask Me" bot
   projects/               ProjectCard, ProjectLinks, ProjectVisual
   projects/visuals/       CSS interface mockups (ReBuzz, Feastio)
-  system/                 StackCard (hero), StackSignal (toolkit HUD)
   ui/                     Section, DisplayHeading, Reveal, ActionLink,
                           Typewriter, PhotoFrame, SocialRow, BrandIcon,
-                          StatusDot, GridBackdrop, Cursor
+                          StatusDot, GridBackdrop, Cursor,
+                          StackSignal (toolkit HUD)
 lib/
   site.ts                 identity, nav, contact channels
   projects.ts             case-study content

@@ -95,13 +95,3 @@ export const aboutFacts = [
   { label: "Focus", value: "Backend and full-stack" },
   { label: "Studying", value: "BSc CSIT" },
 ];
-
-/** Node labels for the hero system diagram. */
-export const heroSystemNodes = [
-  { label: "REACT", role: "FRAMEWORK" },
-  { label: "NEXT.JS", role: "INTERFACE" },
-  { label: "TYPESCRIPT", role: "LANGUAGE" },
-  { label: "PYTHON", role: "PERSISTENCE" },
-  { label: "DJANGO", role: "VERSION CONTROL" },
-  { label: "GIT", role: "LANGUAGE" },
-];

@@ -6,7 +6,6 @@ import { DisplayHeading } from "@/components/ui/DisplayHeading";
 import { Typewriter } from "@/components/ui/Typewriter";
 import { SocialRow } from "@/components/ui/SocialRow";
 import { PhotoFrame } from "@/components/ui/PhotoFrame";
-import { StackCard } from "@/components/system/StackCard";
 import { EASE_OUT_EXPO } from "@/lib/motion";
 import { resumeUrl, site, typewriterRoles } from "@/lib/site";
 
@@ -76,8 +75,8 @@ export function Hero() {
           {/* ---------------------------------------------- portrait
               Square. Full width on phones; on tablets it takes the height left
               under the statement (~28rem). On desktop it fills its
-              column toward the text, capped by the height under the nav and
-              stack card, so the hero fits on one laptop screen. */}
+              column toward the text, capped by the height under the nav, so the
+              hero fits on one laptop screen. */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -85,7 +84,6 @@ export function Hero() {
             className="relative w-full sm:max-w-[min(24rem,max(12rem,calc(100svh_-_28rem)))] lg:col-span-6 lg:ml-auto lg:mr-0 lg:max-w-[min(44rem,max(20rem,calc(100svh_-_11rem)))]"
           >
             <PhotoFrame />
-            <StackCard className="hidden lg:absolute lg:-bottom-6 lg:-left-4 lg:block lg:w-[17rem] xl:-left-12 2xl:-left-16" />
           </motion.div>
         </div>
       </div>
